@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#245c45">
+  <meta name="description" content="Understand financial options, compare their trade-offs and build a decision plan. Wallet Wise uses fictional demonstration data.">
+  <title>Wallet Wise · Money choices, made clearer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./src/styles/tokens.css">
+  <link rel="stylesheet" href="./src/styles/base.css">
+  <link rel="stylesheet" href="./src/styles/explore.css">
+  <link rel="stylesheet" href="./src/styles/compare.css">
+  <link rel="stylesheet" href="./src/styles/plan.css">
+  <link rel="stylesheet" href="./src/styles/saved.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app-shell">
+    <header class="app-header"><a class="brand" href="#/">Wallet Wise</a></header>
+    <main id="main" tabindex="-1"></main>
+    <nav id="navigation" class="bottom-nav" aria-label="Main navigation"></nav>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="confirm-dialog" aria-labelledby="dialog-title">
+    <h2 id="dialog-title"></h2><p id="dialog-message"></p>
+    <div class="button-stack"><button id="dialog-confirm" class="button button-primary">Confirm</button><button id="dialog-cancel" class="button button-secondary">Cancel</button></div>
+  </dialog>
+  <noscript><p>Wallet Wise needs JavaScript enabled to compare options and save your plan.</p></noscript>
+</body>
+</html>

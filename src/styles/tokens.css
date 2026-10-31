@@ -1,0 +1,19 @@
+@font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 400 600; font-display: swap; src: url('../../assets/DM-Sans-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 700; font-display: swap; src: url('../../assets/DM-Sans-Bold.ttf') format('truetype'); }
+:root {
+  --paper: #faf9f4;
+  --ink: #172f2b;
+  --green: #245c45;
+  --mint: #e6f1e8;
+  --muted: #56675d;
+  --line: #d4dbd1;
+  --surface: #fff;
+  --warning: #fff2d9;
+  --error: #9b342c;
+  --font: 'DM Sans', system-ui, sans-serif;
+  --radius: 12px;
+  --control-radius: 9px;
+  --app-width: 430px;
+  --nav-height: 72px;
+  --space: 14px;
+}

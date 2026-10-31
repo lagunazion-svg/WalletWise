@@ -1,0 +1,9 @@
+{
+  "name": "wallet-wise-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Wallet Wise mobile-first frontend, built from the team's Figma prototype.",
+  "scripts": { "start": "node scripts/serve.mjs", "dev": "node scripts/serve.mjs", "test": "node --test tests/*.test.js", "check": "node scripts/check.mjs" },
+  "engines": { "node": ">=20" }
+}
