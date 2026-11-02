@@ -1,1 +1,11 @@
-/* Part B: Compare feature styles go here. */
+/* Compare owner */
+.comparison-facts { margin: 0; display: grid; gap: 12px; }
+.comparison-facts dt { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.comparison-facts dd { margin: 0; font-size: 14px; color: var(--muted); }
+.card-links { display: flex; align-items: center; justify-content: space-between; font-size: 14px; }
+.card-links a { padding: 10px 0; }
+.comparison-explainer { margin: 16px 0; }
+.comparison-cards { margin-bottom: 14px; }
+.interest-metric strong { display: block; font-size: 28px; color: var(--ink); }
+.interest-metric span { font-size: 12px; }
+#scenario-formula { margin: 16px 0 20px; }
