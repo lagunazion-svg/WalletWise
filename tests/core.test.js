@@ -11,7 +11,23 @@ test('the $500 scenario gives correctly rounded monthly interest', () => {
 });
 test('comparison allows removal but rejects mixed categories', () => {
   clearAll(); toggleSelected('c1'); toggleSelected('c2'); assert.deepEqual(getState().selected, ['c1', 'c2']);
-  assert.match(toggleSelected('b1').error, /same category/); toggleSelected('c1'); assert.deepEqual(getState().selected, ['c2']);
+  const mixedCategory = toggleSelected('b1');
+  assert.match(mixedCategory.error, /same category/); assert.equal(mixedCategory.clearRequired, true);
+  toggleSelected('c1'); assert.deepEqual(getState().selected, ['c2']);
+});
+test('a new app session clears comparison selections but keeps other saved data', async () => {
+  let persisted = JSON.stringify({ selected: ['c1', 'c2'], saved: ['b1'], plan: validPlan(), draft: null, draftStep: 0 });
+  const originalStorage = globalThis.localStorage;
+  globalThis.localStorage = { getItem: () => persisted, setItem: (_key, value) => { persisted = value; } };
+  try {
+    const sessionStore = await import('../src/lib/store.js?startup-reset-test');
+    assert.deepEqual(sessionStore.getState().selected, []);
+    assert.deepEqual(sessionStore.getState().saved, ['b1']);
+    assert.deepEqual(JSON.parse(persisted).selected, []);
+  } finally {
+    if (originalStorage === undefined) delete globalThis.localStorage;
+    else globalThis.localStorage = originalStorage;
+  }
 });
 test('normalization recovers malformed and stale saved data', () => {
   const result = normalizeState({ selected: ['c1', 'c1', 'b1', 'gone'], saved: ['c2', 'gone'], draftStep: 99 });

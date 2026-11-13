@@ -8,8 +8,11 @@ a { color: var(--green); text-underline-offset: 3px; }
 button:disabled { opacity: .45; cursor: not-allowed; }
 :focus-visible { outline: 3px solid #438460; outline-offset: 4px; }
 .app-shell { width: 100%; max-width: var(--app-width); min-height: 100dvh; margin: auto; background: var(--paper); }
-.app-header { padding: 44px 24px 0; }
-.brand { display: block; color: var(--ink); font-size: 21px; font-weight: 700; line-height: 1.35; text-decoration: none; }
+.app-header { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; padding: 44px 24px 0; }
+.brand { display: block; grid-column: 2; grid-row: 1; color: var(--ink); font-size: 21px; font-weight: 700; line-height: 1.35; text-decoration: none; }
+.header-action { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; justify-self: start; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--green); font-size: 14px; font-weight: 700; line-height: 1.35; text-decoration: none; }
+.header-action:last-child { justify-self: end; }
+.header-action:hover { background: #f0f6f0; }
 main { padding: 14px 24px calc(var(--nav-height) + 32px + env(safe-area-inset-bottom)); outline: none; }
 h1, h2, h3, p { margin: 0; }
 h1 { font-size: 30px; line-height: 1.35; font-weight: 700; letter-spacing: -.45px; white-space: pre-line; overflow-wrap: anywhere; }

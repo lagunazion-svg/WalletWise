@@ -3,12 +3,24 @@ import { categories, getProduct, getProducts } from '../lib/products.js';
 import { getState, toggleSaved, toggleSelected, updateState } from '../lib/store.js';
 import { escapeHTML as e, costSummary, startingCost, dollars } from '../lib/format.js';
 import { Button, pageHeading, demoNote, bindActions, toast, confirmAction } from '../components/ui.js';
+async function toggleComparison(id) {
+  const result = toggleSelected(id);
+  if (result.clearRequired) {
+    const product = getProduct(id);
+    const confirmed = await confirmAction('Switch comparison category?', `Comparisons can only include options from the same category. Clear all selected options and add ${product.name}?`, 'Clear and add option');
+    if (!confirmed) return null;
+    updateState({ selected: [id] });
+    return { added: true, categoryChanged: true };
+  }
+  if (result.error) { toast(result.error); return null; }
+  return result;
+}
 export function mountExplore(context) {
   const { container, path, params, navigate, refreshNavigation } = context;
   if (path === '/') {
     container.innerHTML = pageHeading('Money choices,\nmade clearer.', 'Understand your options before your next money decision.') + `
-      <section class="card home-plan"><h2>A choice you can explain</h2><p>Compare costs, explore trade-offs and keep your reasons.</p>${Button({ label: 'Build a decision plan', href: '#/plan', variant: 'secondary' })}</section>
-      <div class="button-stack home-categories">${categories.map((cat, index) => Button({ label: `Explore ${cat.toLowerCase()}`, href: `#/explore?category=${encodeURIComponent(cat)}`, variant: index === 0 ? 'primary' : 'secondary' })).join('')}</div>
+      <section class="card home-plan"><h2>A choice you can explain</h2><p>Compare costs, explore trade-offs and keep your reasons.</p>${Button({ label: 'Build a decision plan', href: '#/plan', variant: 'primary' })}</section>
+      <div class="button-stack home-categories">${categories.map(cat => Button({ label: `Explore ${cat.toLowerCase()}`, href: `#/explore?category=${encodeURIComponent(cat)}`, variant: 'secondary' })).join('')}</div>
       <p class="quiet">No sign-up. No credit check. Sample data only.</p>`;
     return;
   }
@@ -49,7 +61,7 @@ export function mountExplore(context) {
   const search = container.querySelector('#option-search');
   filter.addEventListener('change', renderProducts); sort.addEventListener('change', renderProducts); search.addEventListener('input', renderProducts);
   const cleanup = bindActions(container, {
-    select: id => { const result = toggleSelected(id); if (result.error) toast(result.error); renderProducts(); },
+    select: async id => { if (await toggleComparison(id)) renderProducts(); },
     clear: () => { updateState({ selected: [] }); renderProducts(); toast('Comparison cleared.'); },
     filters: () => { filter.checked = false; search.value = ''; sort.value = 'original'; renderProducts(); }
   });
@@ -78,7 +90,12 @@ function mountDetails({ container, path, navigate, refreshNavigation }) {
       if (removing && !await confirmAction('Remove saved option?', `${product.name} will leave your workspace. You can save it again later.`, 'Remove option')) return;
       toggleSaved(product.id); render(); toast(removing ? 'Option removed.' : 'Option saved in this browser.');
     },
-    compare: () => { const result = toggleSelected(product.id); if (result.error) toast(result.error); else toast(result.added ? 'Added to comparison.' : 'Removed from comparison.'); render(); }
+    compare: async () => {
+      const result = await toggleComparison(product.id);
+      if (!result) return;
+      toast(result.categoryChanged ? 'Comparison switched to this category.' : result.added ? 'Added to comparison.' : 'Removed from comparison.');
+      render();
+    }
   });
   render(); return cleanup;
 }
