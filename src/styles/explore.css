@@ -38,3 +38,5 @@
 .chart-ranges button { flex: 1; min-width: 0; min-height: 44px; border: 0; border-radius: 8px; background: transparent; color: var(--green); font: inherit; font-size: 12px; cursor: pointer; }
 .chart-ranges button[aria-pressed="true"] { background: var(--green); color: white; }
 .investment-chart .chart-note { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+.paper-purchase { display: grid; gap: 10px; padding: 16px 0; border-top: 1px solid var(--line); margin: 12px 0; }
