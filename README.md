@@ -34,7 +34,7 @@ The first command checks syntax, local imports and bundled assets. The tests cov
 - Edit the carried balance and see monthly interest estimates update.
 - Build a plan through ten steps with your own amounts, choices, reasoning and next step.
 - Save and resume a draft, edit the saved plan and print it.
-- Save and remove products, retain choices after refreshing and reset demo data.
+- Save and remove products, retain saved items and plans after refreshing and reset demo data. Comparison selections clear when the app starts.
 - Use touch controls, keyboard navigation, form labels and confirmation dialogs.
 
 All data stays in the browser's local storage. There is no backend, real account integration or cross-device synchronization. All financial products and rates are fictional teaching examples. The monthly-interest scenario uses a simplified balance × APR ÷ 12 estimate.

@@ -19,7 +19,11 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="app-shell">
-    <header class="app-header"><a class="brand" href="#/">Wallet Wise</a></header>
+    <header class="app-header">
+      <a id="home-button" class="header-action" href="#/" hidden>Home</a>
+      <span class="brand">Wallet Wise</span>
+      <button id="back-button" class="header-action" type="button" hidden>Back</button>
+    </header>
     <main id="main" tabindex="-1"></main>
     <nav id="navigation" class="bottom-nav" aria-label="Main navigation"></nav>
   </div>

@@ -14,7 +14,13 @@ export function normalizeState(value) {
   result.draftStep = Number.isInteger(value.draftStep) ? Math.min(9, Math.max(0, value.draftStep)) : 0;
   return result;
 }
-try { state = normalizeState(JSON.parse(globalThis.localStorage?.getItem(STORAGE_KEY) ?? 'null')); }
+try {
+  state = normalizeState(JSON.parse(globalThis.localStorage?.getItem(STORAGE_KEY) ?? 'null'));
+  if (state.selected.length) {
+    state.selected = [];
+    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+}
 catch { storageAvailable = false; }
 export function getState() { return structuredClone(state); }
 export function canPersist() { return storageAvailable; }
@@ -32,7 +38,7 @@ export function toggleSelected(id) {
   const product = getProduct(id);
   if (!product) return { error: 'That option is unavailable.' };
   if (state.selected.includes(id)) { updateState({ selected: state.selected.filter(item => item !== id) }); return { removed: true }; }
-  if (state.selected.length && getProduct(state.selected[0]).cat !== product.cat) return { error: 'Compare options in the same category. Clear your comparison to switch categories.' };
+  if (state.selected.length && getProduct(state.selected[0]).cat !== product.cat) return { error: 'Compare options in the same category.', clearRequired: true };
   if (state.selected.length >= 3) return { error: 'Compare up to three options. Remove one to add another.' };
   updateState({ selected: [...state.selected, id] });
   return { added: true };
