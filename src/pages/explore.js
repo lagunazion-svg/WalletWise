@@ -1,3 +1,4 @@
+import { investmentChart, bindInvestmentCharts } from '../components/investment-chart.js';
 // Explore owner: home, category browsing, product details and plain-language learning.
 import { categories, getProduct, getProducts } from '../lib/products.js';
 import { getState, toggleSaved, toggleSelected, updateState } from '../lib/store.js';
@@ -50,6 +51,7 @@ export function mountExplore(context) {
         <h2><a href="#/product/${product.id}">${e(product.name)}</a>${saved.includes(product.id) ? '<span class="saved-label">Saved</span>' : ''}</h2>
         <p>${e(costSummary(product))}<br>${e(startingCost(product))}</p>
         <p class="product-tag">${e(product.tag)}</p>
+        ${investmentChart(product)}
         ${Button({ label: selected.includes(product.id) ? 'Selected for comparison' : 'Add to compare', action: 'select', value: product.id, variant: selected.includes(product.id) ? 'primary' : 'secondary', extra: `aria-pressed="${selected.includes(product.id)}" aria-label="${selected.includes(product.id) ? 'Remove' : 'Add'} ${e(product.name)} ${selected.includes(product.id) ? 'from' : 'to'} comparison"` })}
         <a class="text-link" href="#/product/${product.id}">View details<span class="sr-only"> for ${e(product.name)}</span></a>
       </article>`).join('') : `<div class="empty-state"><h2>No matching options</h2><p>Try a different search or turn off the fee filter.</p>${Button({ label: 'Clear filters', action: 'filters', variant: 'secondary' })}</div>`;
@@ -65,8 +67,9 @@ export function mountExplore(context) {
     clear: () => { updateState({ selected: [] }); renderProducts(); toast('Comparison cleared.'); },
     filters: () => { filter.checked = false; search.value = ''; sort.value = 'original'; renderProducts(); }
   });
+  const cleanupCharts = bindInvestmentCharts(container);
   renderProducts();
-  return cleanup;
+  return () => { cleanup(); cleanupCharts(); };
 }
 function mountDetails({ container, path, navigate, refreshNavigation }) {
   const product = getProduct(path.split('/')[2]);
@@ -77,6 +80,7 @@ function mountDetails({ container, path, navigate, refreshNavigation }) {
     const secondary = product.cat === 'Credit cards' ? `${product.apr}% APR · ${startingCost(product)}` : `${costSummary(product)} · ${startingCost(product)}`;
     container.innerHTML = pageHeading(product.name, `${product.cat === 'Credit cards' ? 'Credit card' : product.cat === 'Bank accounts' ? 'Bank account' : 'Investing option'} · fictional option`) + `
       <section class="highlight"><p class="large-metric">${e(summary)}</p><p class="metric-description">${e(secondary)}</p></section>
+      ${investmentChart(product)}
       <section class="detail-section"><h2>What you need</h2><p>${e(product.req)}</p></section>
       <section class="detail-section"><h2>What to watch</h2><p>${e(product.con)}</p></section>
       <div class="button-stack">${Button({ label: saved.includes(product.id) ? 'Saved · remove from workspace' : 'Save option', action: 'save' })}${Button({ label: `Back to ${product.cat.toLowerCase()}`, href: `#/explore?category=${encodeURIComponent(product.cat)}`, variant: 'secondary' })}</div>
@@ -97,5 +101,6 @@ function mountDetails({ container, path, navigate, refreshNavigation }) {
       render();
     }
   });
-  render(); return cleanup;
+  const cleanupCharts = bindInvestmentCharts(container);
+  render(); return () => { cleanup(); cleanupCharts(); };
 }
