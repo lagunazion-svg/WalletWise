@@ -7,6 +7,14 @@ A working mobile-first implementation of the Bread Bros Wallet Wise Figma projec
 
 Wallet Wise helps users compare financial options, review a sample monthly budget, simulate expense payments, practice investing and build a personal decision plan.
 
+## Video demo
+
+<div align="center">
+
+[![Watch the Wallet Wise demo](https://img.youtube.com/vi/PSNcaBd2T-Y/hqdefault.jpg)](https://www.youtube.com/watch?v=PSNcaBd2T-Y)
+
+</div>
+
 ## Run it
 
 Install Node.js 20 or newer, then open a terminal in this folder:
@@ -107,4 +115,5 @@ The DM Sans font is bundled under its SIL Open Font License in `assets/FONT-LICE
 
 The app is a static site with no build step. Its HTML, source modules, styles and assets can be served directly by GitHub Pages. Keep the published repository and Pages site available through the end of the semester for grading. Local storage is specific to the site's origin, so progress on localhost is separate from progress on the hosted app.
 
-This is an AI-assisted starter implementation. Review and understand the code, make and test your own changes, and document actual contributions according to your course policy.
+# AI Usage
+We set up the boilerplate app with AI and used it for idea refinement.
