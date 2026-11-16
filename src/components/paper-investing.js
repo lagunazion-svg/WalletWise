@@ -1,12 +1,12 @@
 import { toast } from './ui.js';
-import { getState, buyInvestment } from '../lib/store.js';
+import { getState, buyInvestment, updateState } from '../lib/store.js';
 import { investmentPrice } from '../lib/investment-prices.js';
 import { currency } from '../lib/format.js';
 
 export function paperBalance() {
   const state = getState();
   const value = Object.entries(state.holdings).reduce((sum, [id, units]) => sum + units * investmentPrice(id), 0);
-  return `<section class="highlight"><h2>Paper investing</h2><p>Available to invest: <strong>${currency(state.paperCash / 100)}</strong></p><p>Investments: ${currency(value)}</section>`;
+  return `<section class="highlight"><h2>Paper investing</h2><p>Available to invest: <strong>${currency(state.paperCash / 100)}</strong></p><p>Investments: ${currency(value)}</p><button type="button" class="paper-reset" data-reset-paper>Reset paper investments</button></section>`;
 }
 
 export function paperPurchase(product) {
@@ -24,6 +24,13 @@ export function paperPurchase(product) {
 }
 
 export function bindPaperPurchases(container, refresh) {
+  const onClick = event => {
+    if (!event.target.closest('[data-reset-paper]')) return;
+    updateState({ paperCash: 500000, holdings: {} });
+    refresh();
+    toast('Paper investments reset. You have $5,000 to invest.');
+    container.querySelector('[data-reset-paper]').focus();
+  };
   const onSubmit = event => {
     const form = event.target.closest('[data-buy-product]');
     if (!form) return;
@@ -39,5 +46,9 @@ export function bindPaperPurchases(container, refresh) {
     container.querySelector(`#buy-amount-${id}`).focus();
   };
   container.addEventListener('submit', onSubmit);
-  return () => container.removeEventListener('submit', onSubmit);
+  container.addEventListener('click', onClick);
+  return () => {
+    container.removeEventListener('submit', onSubmit);
+    container.removeEventListener('click', onClick);
+  };
 }
