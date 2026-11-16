@@ -1,0 +1,13 @@
+.money-overview { display: grid; gap: 8px; }
+.money-section { margin-top: 24px; }
+.money-section > h2 { margin-bottom: 14px; }
+.money-account, .money-expense { flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; }
+.money-account strong, .money-expense strong { white-space: nowrap; font-size: 17px; }
+.money-account .quiet, .money-expense .quiet { margin-top: 5px; }
+.money-breakdown { margin: 0; }
+.money-breakdown div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.money-breakdown dt { font-size: 14px; }
+.money-breakdown dd { margin: 0; font-weight: 700; white-space: nowrap; }
+.money-paid { font-size: 12px; color: var(--green); margin-top: 6px; }
+.money-success { padding: 16px; border: 1px solid var(--green); border-radius: 9px; background: var(--mint); margin-bottom: 16px; }
+.bottom-nav { grid-template-columns: repeat(5, 1fr); gap: 2px; padding-left: 6px; padding-right: 6px; }

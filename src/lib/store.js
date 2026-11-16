@@ -1,11 +1,13 @@
 import { getProduct } from './products.js';
+import { normalizePayments } from './money-demo.js';
 export const STORAGE_KEY = 'wallet-wise-frontend-v1';
-const emptyState = () => ({ selected: [], saved: [], plan: null, draft: null, draftStep: 0 });
+const emptyState = () => ({ selected: [], saved: [], plan: null, draft: null, draftStep: 0, payments: {} });
 let state = emptyState();
 let storageAvailable = true;
 export function normalizeState(value) {
   const result = emptyState();
   if (!value || typeof value !== 'object') return result;
+  result.payments = normalizePayments(value.payments);
   for (const key of ['selected', 'saved']) result[key] = [...new Set((Array.isArray(value[key]) ? value[key] : []).filter(id => typeof id === 'string' && getProduct(id)))];
   result.selected = result.selected.filter(id => getProduct(id).cat === getProduct(result.selected[0])?.cat).slice(0, 3);
   for (const key of ['plan', 'draft']) if (value[key] && typeof value[key] === 'object' && !Array.isArray(value[key])) result[key] = { ...value[key] };

@@ -7,8 +7,8 @@ export function Button({ label, href, action, value = '', variant = 'primary', d
 export function InputField({ name, label, value = '', type = 'text', hint = '', required = false, min = 0, max = 1000000, maxlength = 180 }) {
   return `<div class="field"><label for="${e(name)}">${e(label)}</label><input id="${e(name)}" name="${e(name)}" type="${e(type)}" value="${e(value)}" ${required ? 'required' : ''} ${type === 'number' ? `min="${min}" max="${max}" step="0.01" inputmode="decimal"` : `maxlength="${maxlength}"`} ${hint ? `aria-describedby="${e(name)}-hint"` : ''}>${hint ? `<p class="field-hint" id="${e(name)}-hint">${e(hint)}</p>` : ''}</div>`;
 }
-export function pageHeading(title, description, eyebrow = 'Fictional demo data') {
-  return `<div class="page-heading"><p class="eyebrow">${e(eyebrow)}</p><h1>${e(title)}</h1>${description ? `<p class="subtitle">${e(description)}</p>` : ''}</div>`;
+export function pageHeading(title, description, eyebrow = '') {
+  return `<div class="page-heading">${eyebrow ? `<p class="eyebrow">${e(eyebrow)}</p>` : ''}<h1>${e(title)}</h1>${description ? `<p class="subtitle">${e(description)}</p>` : ''}</div>`;
 }
 export const demoNote = () => '<p class="demo-note">Fictional products and sample rates. No applications, credit checks or money movement.</p>';
 export function toast(message) {
