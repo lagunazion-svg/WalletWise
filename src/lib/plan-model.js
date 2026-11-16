@@ -29,7 +29,7 @@ export function validatePlan(draft) {
 export function planWarnings(draft) {
   const warnings = [];
   const investment = getProduct(draft.invest);
-  if (investment && investment.risk === 'Market risk' && draft.horizon !== 'long') warnings.push('Your timeline is short or uncertain. Market investments can lose value. Consider a learning-only step for money you may need soon.');
+  if (investment && draft.horizon !== 'long') warnings.push('Your timeline is short or uncertain. Market investments can lose value. Consider waiting for money you may need soon.');
   const credit = getProduct(draft.card);
   if (credit?.deposit) warnings.push(`The ${credit.name} example requires a $${credit.deposit} deposit. Consider that upfront amount separately from your accessible savings target.`);
   return warnings;

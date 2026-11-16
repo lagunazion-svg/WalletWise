@@ -35,7 +35,7 @@ export function mountPlan({ container, path, navigate, refreshNavigation }) {
       () => radioGroup('horizon', titles[3], Object.entries(horizons).map(([value, label]) => ({ value, label })), draft.horizon),
       () => productChoices('Credit cards', 'card', draft),
       () => productChoices('Bank accounts', 'bank', draft),
-      () => productChoices('Investing', 'invest', draft) + '<p class="quiet">A practice portfolio uses fictional money. Market investments can lose value. Choosing to wait is valid.</p>',
+      () => productChoices('Investing', 'invest', draft) + '<p class="quiet">All investments shown are fictional examples. Investments can lose value. Choosing to wait is valid.</p>',
       () => InputField({ name: 'monthly', label: 'Planned saving or investing each month ($)', value: draft.monthly, type: 'number', required: true, hint: `You have ${currency(draft.available)} available each month after essentials.` }),
       () => `<div class="field"><label for="reason">Why do these choices fit your priorities?</label><textarea id="reason" name="reason" rows="5" maxlength="1500" required>${e(draft.reason)}</textarea></div>${InputField({ name: 'next', label: 'One thing to verify before acting', value: draft.next, required: true, maxlength: 300 })}<label class="consent"><input type="checkbox" name="understand" ${draft.understand ? 'checked' : ''}><span>I understand these products are fictional. This plan does not apply for accounts or guarantee approval or returns.</span></label>`,
       () => planSummary(draft) + `<div class="review-edits">${Button({ label: 'Revise credit choice', action: 'jump', value: '4', variant: 'secondary' })}${Button({ label: 'Revise monthly amount', action: 'jump', value: '7', variant: 'secondary' })}</div>`
